@@ -17,12 +17,7 @@ public struct Indices {
    public init()
    {}
 
-   public init( _ i: [Int32])
-   {
-      entries = i;
-   }
-   
-   public func get(_ i : Int) -> Int32
+public func get(_ i : Int) -> Int32
    {
      return entries[i]
    }
@@ -38,12 +33,6 @@ public struct Values {
  
    public init()
    {}
-
-   public init(  values: [Double])
-   {
-      entries = values;
-   }
-   
 
    public init(_ size : Int , _ ignore: Int)
    {
@@ -66,11 +55,6 @@ public struct Values {
 public func solve(_ dimension : Int32, _ rowIndices : Indices, _ columnIndices: Indices, _ aValues: Values, _ bValues:  Values, _ solution : inout Values ) {
   isolve(dimension, rowIndices.entries, columnIndices.entries, aValues.entries, bValues.entries, &solution.entries)
 }
-
-
-
-
-
 
 
 
@@ -120,15 +104,16 @@ public class Matrix {
 
 func isolve(_ dimension : Int32, _ rowIndices: [Int32], _ columnIndices: [Int32], _ aValues: [Double], _ bValues:  [Double], _ solution : inout [Double] ) {
 
-
   let A = SparseConvertFromCoordinate(dimension, dimension,
                                       aValues.count, 1,
                                       SparseAttributes_t(),
                                       rowIndices, columnIndices,
                                       aValues)
-  /// Factorize _A_.
+ print ( "before factorization")
+ /// Factorize _A_.
   let factorization = SparseFactor(SparseFactorizationQR, A)
 
+ print ( "done") 
   defer {
     SparseCleanup(A)
     SparseCleanup(factorization)
@@ -145,30 +130,3 @@ func isolve(_ dimension : Int32, _ rowIndices: [Int32], _ columnIndices: [Int32]
   }
 }
 
-
-
-
-func test()
-{
-  /// Create the coefficient matrix _A_.
-  let dimension : Int32 = 3
-  let rowIndices: Indices =   Indices( [ 0,  1, 1,  2] )
-  let columnIndices: Indices = Indices( [ 2,  0, 2,  1] )
-  let aValues: Values =  Values(values: [10, 20, 5, 50] )
-  /// Create the right-hand-side vector, _b_.
-  let bValues: Values = Values(values: [30, 35, 100] )
-  var solution: Values = Values(values: [ 0, 0, 0] )
-
-  //let M : Matrix = Matrix(dimension, rowIndices, columnIndices, aValues)
-
-  // M.solve(bValues, &solution)
-
-   solve(dimension, rowIndices, columnIndices, aValues, bValues, &solution)
-
-  print( solution.entries[0])
-  print( solution.entries[1])
-  print( solution.entries[2])
-}
-
-
-// test()

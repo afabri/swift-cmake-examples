@@ -19,7 +19,7 @@ int main(int argc, char ** argv) {
   SwiftAccelerate::Indices cols = SwiftAccelerate::Indices::init();
   SwiftAccelerate::Values values = SwiftAccelerate::Values::init();
   SwiftAccelerate::Values B = SwiftAccelerate::Values::init();
-  SwiftAccelerate::Values X = SwiftAccelerate::Values::init(3, 0);
+  SwiftAccelerate::Values X = SwiftAccelerate::Values::init();
 
   rows.push_back(0);
   cols.push_back(2);
@@ -41,15 +41,24 @@ int main(int argc, char ** argv) {
   B.push_back(35.0);
   B.push_back(100.0);
 
-  SwiftAccelerate::Matrix M = SwiftAccelerate::Matrix::init(3, rows, cols, values);
-  M.solve(B, X);
+  X.push_back(0.0);
+  X.push_back(0.0);
+  X.push_back(0.0);
 
-  //std::cout << " before solve" << std::endl;
-  //SwiftAccelerate::solve(3, rows, cols, values, B, X);
+  SwiftAccelerate::solve(3, rows, cols, values, B, X);
   
   std::cout << X.get(0) << std::endl;
   std::cout << X.get(1) << std::endl;
   std::cout << X.get(2) << std::endl;
 
+
+  std::cout << "Now use Matrix" << std::endl;
+
+  SwiftAccelerate::Matrix M = SwiftAccelerate::Matrix::init(3, rows, cols, values);
+  M.solve(B, X);
+  std::cout << X.get(0) << std::endl;
+  std::cout << X.get(1) << std::endl;
+  std::cout << X.get(2) << std::endl;
+  
   return 0;
 }

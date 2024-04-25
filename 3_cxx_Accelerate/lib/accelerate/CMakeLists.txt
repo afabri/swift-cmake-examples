@@ -21,4 +21,4 @@ _swift_generate_cxx_header(accelerate
   SEARCH_PATHS "${ACCELERATE_INCLUDE_DIR}")
 
 
-add_executable( saccelerate accelerate.swift )
+
