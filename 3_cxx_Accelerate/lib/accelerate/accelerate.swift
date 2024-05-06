@@ -39,14 +39,23 @@ public struct Values {
      self.entries =  [Double] (repeating: 0.0, count: size)
    }
    
+   public mutating func set(_ i : Int, _ d : Double)
+   {
+    entries[i] = d;
+   }
+   
    public func get(_ i : Int) -> Double
    {
      return entries[i]
    }
- 
+
    public mutating func push_back(_ x: Double)
    {
      entries.append(x)
+   }
+   public func size() -> Int
+   {
+     return entries.count;
    }
  }
 
@@ -64,7 +73,14 @@ public class Matrix {
   var dimension : Int32
   var A : SparseMatrix_Double
   var factorization : SparseOpaqueFactorization_Double
-  
+
+  public init()
+  {
+    dimension = 0
+    A = SparseMatrix_Double()
+    factorization = SparseOpaqueFactorization_Double()
+  }
+
   public init( _ dimension : Int32, _ rowIndices: Indices, _ columnIndices: Indices, _ aValues: Values)
   {
     self.dimension = dimension
@@ -73,16 +89,13 @@ public class Matrix {
                                      SparseAttributes_t(),
                                      rowIndices.entries, columnIndices.entries,
                                      aValues.entries)
-    // print( A)
     
     factorization = SparseFactor(SparseFactorizationQR, A)
   }
 
 
-  deinit {
-    SparseCleanup(A)
-    SparseCleanup(factorization)
-  }
+  deinit
+  {}
 
 
   public func solve( _ bValues:  Values, _ solution : inout Values)
@@ -109,11 +122,9 @@ func isolve(_ dimension : Int32, _ rowIndices: [Int32], _ columnIndices: [Int32]
                                       SparseAttributes_t(),
                                       rowIndices, columnIndices,
                                       aValues)
- print ( "before factorization")
  /// Factorize _A_.
   let factorization = SparseFactor(SparseFactorizationQR, A)
 
- print ( "done") 
   defer {
     SparseCleanup(A)
     SparseCleanup(factorization)
