@@ -13,6 +13,12 @@
 #include <iostream>
 
 int main(int argc, char ** argv) {
+
+  SwiftFibonacci::Indices ind  = SwiftFibonacci::Indices::init();
+
+  ind.push_back(1);
+  SwiftFibonacci::Matrix mat = SwiftFibonacci::Matrix::init(ind);
+
   std::cout << SwiftFibonacci::fibonacciSwift(5) << std::endl;
   return 0;
 }

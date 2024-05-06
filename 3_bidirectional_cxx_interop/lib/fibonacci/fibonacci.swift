@@ -11,6 +11,30 @@
 
 import Fibonacci
 
+
+public struct Indices {
+   var entries : [Int32] = []
+ 
+   public init()
+   {}
+ 
+   public mutating func push_back(_ x: Int32)
+   {
+     entries.append(x)
+   }
+}
+
+
+public class Matrix {
+  var dimension : Int32
+
+public init( _ rowIndices: Indices )
+  {
+    dimension = 0
+  }
+}
+
+
 public func fibonacciSwift(_ x: CInt) -> CInt {
   print("x [swift]: \(x)")
   if x <= 1 {
