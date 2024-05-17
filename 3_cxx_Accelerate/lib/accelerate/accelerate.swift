@@ -61,7 +61,7 @@ public struct Values {
 
 
 
-public func solve(_ dimension : Int32, _ rowIndices : Indices, _ columnIndices: Indices, _ aValues: Values, _ bValues:  Values, _ solution : inout Values ) {
+public func solve(_ dimension : Int32, _ rowIndices : inout Indices, _ columnIndices: inout Indices, _ aValues: inout Values, _ bValues:  inout Values, _ solution : inout Values ) {
   isolve(dimension, rowIndices.entries, columnIndices.entries, aValues.entries, bValues.entries, &solution.entries)
 }
 
@@ -69,7 +69,7 @@ public func solve(_ dimension : Int32, _ rowIndices : Indices, _ columnIndices: 
 
 
 
-public class Matrix {
+public struct Matrix {
   var dimension : Int32
   var A : SparseMatrix_Double
   var factorization : SparseOpaqueFactorization_Double
@@ -81,7 +81,7 @@ public class Matrix {
     factorization = SparseOpaqueFactorization_Double()
   }
 
-  public init( _ dimension : Int32, _ rowIndices: Indices, _ columnIndices: Indices, _ aValues: Values)
+  public mutating func initialize( _ dimension : Int32, _ rowIndices: inout Indices, _ columnIndices: inout Indices, _ aValues: inout Values)
   {
     self.dimension = dimension
     A = SparseConvertFromCoordinate(dimension, dimension,
@@ -94,11 +94,11 @@ public class Matrix {
   }
 
 
-  deinit
-  {}
+  // deinit
+  // {}
 
 
-  public func solve( _ bValues:  Values, _ solution : inout Values)
+  public func solve( _ bValues:  inout Values, _ solution : inout Values)
   {
     solution.entries = bValues.entries.map { $0 }
 

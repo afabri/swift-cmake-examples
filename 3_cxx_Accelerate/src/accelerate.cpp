@@ -45,6 +45,7 @@ int main(int argc, char ** argv) {
   X.push_back(0.0);
   X.push_back(0.0);
 
+  std::cout << " before solve()" << std::endl;
   SwiftAccelerate::solve(3, rows, cols, values, B, X);
   
   std::cout << X.get(0) << std::endl;
@@ -54,7 +55,9 @@ int main(int argc, char ** argv) {
 
   std::cout << "Now use Matrix" << std::endl;
 
-  SwiftAccelerate::Matrix M = SwiftAccelerate::Matrix::init(3, rows, cols, values);
+  SwiftAccelerate::Matrix M = SwiftAccelerate::Matrix::init();
+
+  M.initialize(3, rows, cols, values);
   M.solve(B, X);
   std::cout << X.get(0) << std::endl;
   std::cout << X.get(1) << std::endl;
