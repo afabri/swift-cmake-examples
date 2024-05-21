@@ -102,6 +102,8 @@ public struct Matrix {
   {
     solution.entries = bValues.entries.map { $0 }
 
+   print ("bvalues:")
+   print (bValues.entries[120] )
 
     /// Solve the system.
     solution.entries.withUnsafeMutableBufferPointer { sPtr in
@@ -110,6 +112,8 @@ public struct Matrix {
     
        SparseSolve(factorization, xb)
    }
+print ( "solution" )
+print(  solution.entries[120] )
  }
 }
 
